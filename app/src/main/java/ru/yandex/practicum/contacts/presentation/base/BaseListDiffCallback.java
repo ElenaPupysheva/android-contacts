@@ -5,17 +5,19 @@ import androidx.recyclerview.widget.DiffUtil;
 
 public class BaseListDiffCallback<T extends ListDiffInterface<T>> extends DiffUtil.ItemCallback<T>{
 
-    public boolean theSameAs(T t) {
-        return this.hashCode() == t.hashCode();
+    @Override
+    public boolean areItemsTheSame(@NonNull T  oldItem, @NonNull T newItem) {
+        //Запуталась в условии, поняла как решение с использованием перегрузки(полиморфизм)
+        // Выполнила как в примере ниже у equals()
+        return oldItem.theSameAs(newItem);
     }
 
     @Override
-    public boolean areItemsTheSame(@NonNull T t, @NonNull T t1) {
-        return false;
+    public boolean areContentsTheSame(@NonNull T oldItem, @NonNull T newItem) {
+        return oldItem.equals(newItem);
     }
 
     @Override
-    public boolean areContentsTheSame(@NonNull T t, @NonNull T t1) {
-        return false;
-    }
+    public Object getChangePayload(@NonNull T oldItem, @NonNull T newItem) {
+        return newItem;}
 }
